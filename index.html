@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vancomycin Dosing Calculator</title>
+</head>
+<body>
+    <h1>Vancomycin Dosing Calculator</h1>
+    <form>
+        <label for="weight">Patient Weight (kg):</label>
+        <input type="number" step="0.1" id="weight" name="weight" required><br><br>
+        
+        <label for="scr">Serum Creatinine (mg/dL):</label>
+        <input type="number" step="0.1" id="scr" name="scr" required><br><br>
+        
+        <label for="age">Patient Age (years):</label>
+        <input type="number" id="age" name="age" required><br><br>
+        
+        <input type="button" value="Calculate" onclick="calculate_vancomycin_dose()">
+    </form>
+    
+    <p id="result"></p>
+    
+    <script>
+        function calculate_vancomycin_dose() {
+            var weight = document.getElementById("weight").value;
+            var scr = document.getElementById("scr").value;
+            var age = document.getElementById("age").value;
+            var result = document.getElementById("result");
+            
+            if (age < 18) {
+                result.textContent = "Patient must be at least 18 years old.";
+            } else if (weight <= 0 || scr <= 0) {
+                result.textContent = "Invalid weight or Scr value. Please try again.";
+            } else {
+                var vd = ((0.04 * weight) + (3 * (weight / scr))) / 2;
+                result.textContent = "The vancomycin dose is " + vd.toFixed(2) + " mg.";
+            }
+        }
+    </script>
+</body>
+</html>
