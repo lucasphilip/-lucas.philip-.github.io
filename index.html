@@ -1,42 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Vancomycin Dosing Calculator</title>
+	<title>Vancomycin Dosing Calculator</title>
+
+	<!-- Add some styling with CSS -->
+	<style>
+		body {
+			background-color: #f2f2f2;
+			font-family: Arial, sans-serif;
+		}
+
+		h1 {
+			color: #337ab7;
+			text-align: center;
+		}
+
+		form {
+			margin: 0 auto;
+			max-width: 600px;
+			padding: 20px;
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0,0,0,0.3);
+			border-radius: 5px;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 5px;
+			font-weight: bold;
+			color: #555;
+		}
+
+		input {
+			display: block;
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 10px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
+		}
+
+		button {
+			display: block;
+			margin: 20px auto 0;
+			padding: 10px;
+			background-color: #337ab7;
+			color: #fff;
+			border-radius: 5px;
+			border: none;
+			cursor: pointer;
+			font-size: 18px;
+		}
+
+		p#result {
+			margin-top: 20px;
+			padding: 10px;
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0,0,0,0.3);
+			border-radius: 5px;
+			font-size: 18px;
+			text-align: center;
+		}
+
+	</style>
+
 </head>
 <body>
-    <h1>Vancomycin Dosing Calculator</h1>
-    <form>
-        <label for="weight">Patient Weight (kg):</label>
-        <input type="number" step="0.1" id="weight" name="weight" required><br><br>
-        
-        <label for="scr">Serum Creatinine (mg/dL):</label>
-        <input type="number" step="0.1" id="scr" name="scr" required><br><br>
-        
-        <label for="age">Patient Age (years):</label>
-        <input type="number" id="age" name="age" required><br><br>
-        
-        <input type="button" value="Calculate" onclick="calculate_vancomycin_dose()">
-    </form>
-    
-    <p id="result"></p>
-    
-    <script>
-        function calculate_vancomycin_dose() {
-            var weight = document.getElementById("weight").value;
-            var scr = document.getElementById("scr").value;
-            var age = document.getElementById("age").value;
-            var result = document.getElementById("result");
-            
-            if (age < 18) {
-                result.textContent = "Patient must be at least 18 years old.";
-            } else if (weight <= 0 || scr <= 0) {
-                result.textContent = "Invalid weight or Scr value. Please try again.";
-            } else {
-                var vd = ((0.04 * weight) + (3 * (weight / scr))) / 2;
-                result.textContent = "The vancomycin dose is " + vd.toFixed(2) + " mg.";
-            }
-        }
-    </script>
+	<h1>Vancomycin Dosing Calculator</h1>
+
+	<form>
+		<label for="weight">Patient Weight (in pounds):</label>
+		<input type="number" id="weight" name="weight" min="1" required>
+
+		<label for="creatinine">Serum Creatinine (in mg/dL):</label>
+		<input type="number" id="creatinine" name="creatinine" step="0.1" min="0" required>
+
+		<label for="age">Patient Age:</label>
+		<input type="number" id="age" name="age" min="18" required>
+
+		<button type="button" onclick="calculate()">Calculate</button>
+	</form>
+
+	<p id="result"></p>
+
+	<script>
+		function calculate() {
+			const weight = document.getElementById("weight").value;
+			const creatinine = document.getElementById("creatinine").value;
+			const age = document.getElementById("age").value;
+
+			const dose = weight * (15 - creatinine) / 60;
+
+			let message = "The recommended vancomycin dose for this patient is " + dose.toFixed(2) + " grams every 12 hours.";
+
+			if (age < 65) {
+				message += " Please consider monitoring the patient's kidney function closely.";
+			}
+
+			document.getElementById("result").innerHTML = message;
+		}
+	</script>
 </body>
 </html>
