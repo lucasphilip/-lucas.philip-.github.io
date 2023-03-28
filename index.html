@@ -76,28 +76,51 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container mt-5">
     <h1>Vancomycin Dosing Calculator</h1>
-    <form id="vanco-form">
+    <form>
       <div class="form-group">
         <label for="weight">Weight (lbs)</label>
-        <input type="number" id="weight" name="weight" required>
+        <input type="number" class="form-control" id="weight" placeholder="Enter weight in lbs">
       </div>
       <div class="form-group">
-        <label for="height">Height (inches)</label>
-        <input type="number" id="height" name="height" required>
+        <label for="height">Height (in)</label>
+        <input type="number" class="form-control" id="height" placeholder="Enter height in inches">
       </div>
       <div class="form-group">
         <label for="gender">Gender</label>
-        <select id="gender" name="gender" required>
-          <option value="">Select Gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+        <select class="form-control" id="gender">
+          <option>Male</option>
+          <option>Female</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="creatinine">Serum Creatinine (mg/dL)</label>
-        <input type="number" id="creatinine" name="creatinine" required>
+        <label for="creatinine">Creatinine (mg/dL)</label>
+        <input type="number" step="0.01" class="form-control" id="creatinine" placeholder="Enter creatinine level">
       </div>
-      <div class="form-group">
-        <label for="target-level">Target Trough Level (mg/L)</label>
+      <button type="button" class="btn btn-primary" onclick="calculate()">Calculate</button>
+    </form>
+    <div class="mt-3">
+      <h2>Dosing Information</h2>
+      <p>Dose: <span id="dose"></span> mg</p>
+      <p>Frequency: <span id="frequency"></span> hours</p>
+      <p>Infusion Time: <span id="infusion"></span> hours</p>
+    </div>
+  </div>
+  <script>
+    function calculate() {
+      var weight = document.getElementById("weight").value;
+      var height = document.getElementById("height").value;
+      var gender = document.getElementById("gender").value;
+      var creatinine = document.getElementById("creatinine").value;
+      var dose = 15 * (weight / 2.2) * (1.85 / (0.91 * creatinine));
+      var frequency = 24 / (weight / 2.2);
+      var infusion = (dose / 1000) * 100 / 1.25;
+      document.getElementById("dose").innerHTML = dose.toFixed(2);
+      document.getElementById("frequency").innerHTML = frequency.toFixed(2);
+      document.getElementById("infusion").innerHTML = infusion.toFixed(2);
+    }
+  </script>
+</body>
+
+</html>
