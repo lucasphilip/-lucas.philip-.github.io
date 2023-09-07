@@ -120,6 +120,8 @@
       let adjBW = Math.min(weight, idealBW); // Weight in pounds
       let CrCl = ((140 - age) * adjBW) / (72 * scr);
 
+     <script>
+    function calculate() {
       // Define dosing options
       const dosingOptions = [
         { dose: 750, frequency: "every 8 hours" },
@@ -133,28 +135,13 @@
         { dose: 1750, frequency: "every 24 hours" },
       ];
 
-      // Find the appropriate dosing option based on CrCl and goal trough
-      let selectedOption = null;
-      dosingOptions.forEach((option) => {
-        if (CrCl >= 15 && CrCl <= 30 && goal >= 15 && goal <= 20) {
-          if (option.dose === 750 && option.frequency === "every 8 hours") {
-            selectedOption = option;
-          }
-        } else if (CrCl > 30 && goal > 20) {
-          if (option.dose === 1000 && option.frequency === "every 8 hours") {
-            selectedOption = option;
-          }
-        }
-        // Add more conditions as needed based on your guidelines
-      });
+      // Randomly select a dosing option
+      const randomIndex = Math.floor(Math.random() * dosingOptions.length);
+      const selectedOption = dosingOptions[randomIndex];
 
       // Display the selected dosing option
-      if (selectedOption) {
-        let result = `Dosing Option: ${selectedOption.dose} mg ${selectedOption.frequency}`;
-        document.getElementById("result").innerHTML = result;
-      } else {
-        document.getElementById("result").innerHTML = "No suitable dosing option found for the given inputs.";
-      }
+      let result = `Dosing Option: ${selectedOption.dose} mg ${selectedOption.frequency}`;
+      document.getElementById("result").innerHTML = result;
     }
   </script>
 </body>
