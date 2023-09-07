@@ -115,19 +115,47 @@
 			let scr = parseFloat(document.getElementById("scr").value);
 			let goal = parseFloat(document.getElementById("goal").value);
 
-			let idealBW = 50 + 2.3 * ((height) - 60);
-			let adjBW = Math.min(weight, idealBW);
-			let CrCl = ((140 - age) * adjBW) / (72 * scr);
-			let dose = Math.round((CrCl * goal) / 1000 * 10) / 10;
-			let frequency = 24 / (CrCl / 15);
-			let infusionTime = 1.5 * (dose / 15);
+		      // Calculate CrCl (modify the formula as needed)
+      let idealBW = 50 + 0.9 * ((height) - 60); // Height in inches
+      let adjBW = Math.min(weight, idealBW); // Weight in pounds
+      let CrCl = ((140 - age) * adjBW) / (72 * scr);
 
-			let result = "Dose: " + dose + " mg<br>"
-						+ "Frequency: every " + frequency.toFixed(2) + " hours<br>"
-						+ "Infusion time: " + infusionTime.toFixed(2) + " hours";
+      // Define dosing options
+      const dosingOptions = [
+        { dose: 750, frequency: "every 8 hours" },
+        { dose: 1000, frequency: "every 8 hours" },
+        { dose: 1250, frequency: "every 8 hours" },
+        { dose: 750, frequency: "every 12 hours" },
+        { dose: 1000, frequency: "every 12 hours" },
+        { dose: 1250, frequency: "every 12 hours" },
+        { dose: 1500, frequency: "every 12 hours" },
+        { dose: 1500, frequency: "every 24 hours" },
+        { dose: 1750, frequency: "every 24 hours" },
+      ];
 
-			document.getElementById("result").innerHTML = result;
-		}
-	</script>
+      // Find the appropriate dosing option based on CrCl and goal trough
+      let selectedOption = null;
+      dosingOptions.forEach((option) => {
+        if (CrCl >= 15 && CrCl <= 30 && goal >= 15 && goal <= 20) {
+          if (option.dose === 750 && option.frequency === "every 8 hours") {
+            selectedOption = option;
+          }
+        } else if (CrCl > 30 && goal > 20) {
+          if (option.dose === 1000 && option.frequency === "every 8 hours") {
+            selectedOption = option;
+          }
+        }
+        // Add more conditions as needed based on your guidelines
+      });
+
+      // Display the selected dosing option
+      if (selectedOption) {
+        let result = `Dosing Option: ${selectedOption.dose} mg ${selectedOption.frequency}`;
+        document.getElementById("result").innerHTML = result;
+      } else {
+        document.getElementById("result").innerHTML = "No suitable dosing option found for the given inputs.";
+      }
+    }
+  </script>
 </body>
 </html>
