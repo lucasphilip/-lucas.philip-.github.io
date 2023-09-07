@@ -107,20 +107,6 @@
 	<p id="result"></p>
 
 	<script>
-		function calculate() {
-			let age = parseFloat(document.getElementById("age").value);
-			let gender = document.getElementById("gender").value;
-			let weight = parseFloat(document.getElementById("weight").value);
-			let height = parseFloat(document.getElementById("height").value);
-			let scr = parseFloat(document.getElementById("scr").value);
-			let goal = parseFloat(document.getElementById("goal").value);
-
-		      // Calculate CrCl (modify the formula as needed)
-      let idealBW = 50 + 0.9 * ((height) - 60); // Height in inches
-      let adjBW = Math.min(weight, idealBW); // Weight in pounds
-      let CrCl = ((140 - age) * adjBW) / (72 * scr);
-
-     <script>
     function calculate() {
       // Define dosing options
       const dosingOptions = [
