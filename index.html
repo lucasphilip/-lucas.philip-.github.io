@@ -106,28 +106,38 @@
 
 	<p id="result"></p>
 
-	<script>
+ <script>
+    let calculated = false;
+
     function calculate() {
-      // Define dosing options
-      const dosingOptions = [
-        { dose: 750, frequency: "every 8 hours" },
-        { dose: 1000, frequency: "every 8 hours" },
-        { dose: 1250, frequency: "every 8 hours" },
-        { dose: 750, frequency: "every 12 hours" },
-        { dose: 1000, frequency: "every 12 hours" },
-        { dose: 1250, frequency: "every 12 hours" },
-        { dose: 1500, frequency: "every 12 hours" },
-        { dose: 1500, frequency: "every 24 hours" },
-        { dose: 1750, frequency: "every 24 hours" },
-      ];
+      if (calculated) {
+        // If already calculated, display a message
+        document.getElementById("result").innerHTML = "Dose and frequency already calculated. Please input new values for another calculation.";
+      } else {
+        // Define dosing options
+        const dosingOptions = [
+          { dose: 750, frequency: "every 8 hours" },
+          { dose: 1000, frequency: "every 8 hours" },
+          { dose: 1250, frequency: "every 8 hours" },
+          { dose: 750, frequency: "every 12 hours" },
+          { dose: 1000, frequency: "every 12 hours" },
+          { dose: 1250, frequency: "every 12 hours" },
+          { dose: 1500, frequency: "every 12 hours" },
+          { dose: 1500, frequency: "every 24 hours" },
+          { dose: 1750, frequency: "every 24 hours" },
+        ];
 
-      // Randomly select a dosing option
-      const randomIndex = Math.floor(Math.random() * dosingOptions.length);
-      const selectedOption = dosingOptions[randomIndex];
+        // Randomly select a dosing option
+        const randomIndex = Math.floor(Math.random() * dosingOptions.length);
+        const selectedOption = dosingOptions[randomIndex];
 
-      // Display the selected dosing option
-      let result = `Dosing Option: ${selectedOption.dose} mg ${selectedOption.frequency}`;
-      document.getElementById("result").innerHTML = result;
+        // Display the selected dosing option
+        let result = `Dosing Option: ${selectedOption.dose} mg ${selectedOption.frequency}`;
+        document.getElementById("result").innerHTML = result;
+
+        // Set calculated to true to prevent further calculations with the same input
+        calculated = true;
+      }
     }
   </script>
 </body>
