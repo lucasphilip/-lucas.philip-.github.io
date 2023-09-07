@@ -115,7 +115,7 @@
 			let scr = parseFloat(document.getElementById("scr").value);
 			let goal = parseFloat(document.getElementById("goal").value);
 
-			let idealBW = 50 + 2.3 * ((height/12) - 5);
+			let idealBW = 50 + 2.3 * ((height) - 60);
 			let adjBW = Math.min(weight, idealBW);
 			let CrCl = ((140 - age) * adjBW) / (72 * scr);
 			let dose = Math.round((CrCl * goal) / 1000 * 10) / 10;
